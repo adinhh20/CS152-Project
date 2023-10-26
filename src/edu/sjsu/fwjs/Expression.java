@@ -92,9 +92,9 @@ class BinOpExpr implements Expression {
             case MULTIPLY:
                 return new IntVal(v1.toInt() * v2.toInt());
             case DIVIDE:
-                return new IntVal(v1.toInt() + v2.toInt());
+                return new IntVal(v1.toInt() / v2.toInt());
             case MOD:
-                return new IntVal(v1.toInt() + v2.toInt());
+                return new IntVal(v1.toInt() % v2.toInt());
             case GT:
                 return new BoolVal(v1.toInt() > v2.toInt());
             case GE:
