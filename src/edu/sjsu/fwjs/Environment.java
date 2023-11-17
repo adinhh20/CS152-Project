@@ -28,13 +28,17 @@ public class Environment {
      * null is returned (similar to how JS returns undefined.
      */
     public Value resolveVar(String varName) {
-        // YOUR CODE HERE
-        if (env.containsKey(varName))
-            return env.get(varName);
-        else if (outerEnv != null && outerEnv.env.containsKey(varName))
-            return outerEnv.env.get(varName);
-        else
+
+        Environment e = new Environment(this);
+
+        while ((e != null) && (e.env.get(varName) == null))
+            e = e.outerEnv;
+
+        if (e == null)
             return new NullVal();
+        else
+            return e.env.get(varName);
+
     }
 
     /**
@@ -43,13 +47,15 @@ public class Environment {
      * or any of the function's outer scopes, the var is stored in the global scope.
      */
     public void updateVar(String key, Value v) {
-        // YOUR CODE HERE
+
         if (env.containsKey(key))
-            env.put(key, v);
-        else if (outerEnv != null)
-            outerEnv.updateVar(key, v);
+            env.replace(key, v);
+
+        else if (this.outerEnv != null && this.outerEnv.resolveVar(key) != null)
+            this.outerEnv.updateVar(key, v);
         else
-            env.put(key, v);
+            this.env.put(key, v);
+
     }
 
     /**
@@ -58,10 +64,11 @@ public class Environment {
      * a RuntimeException is thrown.
      */
     public void createVar(String key, Value v) {
-        // YOUR CODE HERE
-        if (env.containsKey(key))
-            throw new RuntimeException("Existing Value");
+
+        if (this.env.containsKey(key))
+            throw new RuntimeException("Variable " + key + " exists");
         else
-            env.put(key, v);
+            this.env.put(key, v);
+
     }
 }
