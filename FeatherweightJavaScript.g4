@@ -14,7 +14,7 @@ PRINT     : 'print' ;
 // Literals
 INT       : [1-9][0-9]* | '0' ;
 BOOL      : 'true' | 'false' ;
-NULL      : 'null'
+NULL      : 'null' ;
 
 // Symbols
 MUL       : '*' ;
@@ -33,7 +33,7 @@ ARGSEP    : ',';
 
 
 // Identifiers
-ID        : [a-zA-Z|_][a-zA-Z|0-9|_]*;
+ID: [a-zA-Z_][a-zA-Z0-9_]*;
 
 
 // Whitespace and comments
